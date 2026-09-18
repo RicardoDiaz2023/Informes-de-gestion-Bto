@@ -782,42 +782,112 @@ canvas { width: 100% !important; }
 
   <div style="background:var(--surface2);border:1px solid var(--line);border-radius:8px;padding:24px 28px;">
     <div style="font-size:12px;color:var(--muted);margin-bottom:20px;letter-spacing:.05em;">VARIABLES IDENTIFICADAS PARA INCORPORAR AL ANÁLISIS CAUSAL</div>
-    <div style="display:flex;flex-direction:column;gap:10px;">
-      <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--surface);border-radius:6px;border:1px solid var(--line);">
-        <span style="color:var(--blue);font-size:18px;line-height:1;flex-shrink:0;">①</span>
-        <div>
-          <div style="font-size:13px;font-weight:700;margin-bottom:3px;">Caracterización del estudiante</div>
-          <div style="font-size:12px;color:var(--muted);">Dimensiones académicas, socioemocionales, familiares y de desarrollo como base de decisiones pedagógicas.</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+
+      <!-- ① -->
+      <div style="background:var(--surface);border-radius:6px;border:1px solid var(--line);overflow:hidden;">
+        <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;cursor:pointer;" onclick="toggleVar('v1')">
+          <span style="color:var(--blue);font-size:18px;line-height:1;flex-shrink:0;">①</span>
+          <div style="flex:1;">
+            <div style="font-size:13px;font-weight:700;margin-bottom:3px;">Caracterización del estudiante</div>
+            <div style="font-size:12px;color:var(--muted);">Identificar fortalezas y necesidades de los estudiantes en las dimensiones académicas, de desarrollo, familiares, físicas y socioemocionales, reconociendo los factores que inciden en el desempeño escolar y utilizar esta información como base para orientar las decisiones pedagógicas, curriculares y de acompañamiento a lo largo de su trayectoria escolar.</div>
+          </div>
+          <span id="arr-v1" style="color:var(--muted);font-size:10px;flex-shrink:0;margin-top:2px;">▼</span>
+        </div>
+        <div id="v1" style="display:none;padding:0 14px 14px 44px;">
+          <ul style="font-size:12px;color:var(--muted);line-height:1.8;margin:0;padding-left:16px;">
+            <li>Definir propósito</li>
+            <li>Momentos de caracterización</li>
+            <li>Fuentes de caracterización</li>
+            <li>Destinos de la caracterización</li>
+            <li>Campos del instrumento de caracterización</li>
+            <li>Instrumentos para caracterización</li>
+            <li>Responsables de la caracterización</li>
+          </ul>
         </div>
       </div>
-      <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--surface);border-radius:6px;border:1px solid var(--line);">
-        <span style="color:var(--blue);font-size:18px;line-height:1;flex-shrink:0;">②</span>
-        <div>
-          <div style="font-size:13px;font-weight:700;margin-bottom:3px;">Historial académico crónico</div>
-          <div style="font-size:12px;color:var(--muted);">Identificar cuántos cortes y años consecutivos lleva cada estudiante en riesgo para distinguir casos nuevos de crónicos.</div>
+
+      <!-- ② -->
+      <div style="background:var(--surface);border-radius:6px;border:1px solid var(--line);overflow:hidden;">
+        <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;cursor:pointer;" onclick="toggleVar('v2')">
+          <span style="color:var(--blue);font-size:18px;line-height:1;flex-shrink:0;">②</span>
+          <div style="flex:1;">
+            <div style="font-size:13px;font-weight:700;margin-bottom:3px;">Historial académico crónico</div>
+            <div style="font-size:12px;color:var(--muted);">Identificar cuántos cortes y años consecutivos lleva cada estudiante en riesgo para distinguir casos nuevos de crónicos.</div>
+          </div>
+          <span id="arr-v2" style="color:var(--muted);font-size:10px;flex-shrink:0;margin-top:2px;">▼</span>
+        </div>
+        <div id="v2" style="display:none;padding:0 14px 14px 44px;">
+          <ul style="font-size:12px;color:var(--muted);line-height:1.8;margin:0;padding-left:16px;">
+            <li>Por realizar histórico más completo de cada estudiante en VPS</li>
+            <li>A la fecha solo se ha analizado los 3 últimos años</li>
+          </ul>
         </div>
       </div>
-      <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--surface);border-radius:6px;border:1px solid var(--line);">
-        <span style="color:var(--blue);font-size:18px;line-height:1;flex-shrink:0;">③</span>
-        <div>
-          <div style="font-size:13px;font-weight:700;margin-bottom:3px;">Disciplina y comportamiento por curso</div>
-          <div style="font-size:12px;color:var(--muted);">Cruzar incidentes de convivencia por curso con el indicador académico para identificar correlaciones visibles.</div>
+
+      <!-- ③ -->
+      <div style="background:var(--surface);border-radius:6px;border:1px solid var(--line);overflow:hidden;">
+        <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;cursor:pointer;" onclick="toggleVar('v3')">
+          <span style="color:var(--blue);font-size:18px;line-height:1;flex-shrink:0;">③</span>
+          <div style="flex:1;">
+            <div style="font-size:13px;font-weight:700;margin-bottom:3px;">Disciplina y comportamiento por curso</div>
+            <div style="font-size:12px;color:var(--muted);">Relacionar incidentes de indisciplina o comportamiento de estudiantes con sus resultados en desempeños.</div>
+          </div>
+          <span id="arr-v3" style="color:var(--muted);font-size:10px;flex-shrink:0;margin-top:2px;">▼</span>
+        </div>
+        <div id="v3" style="display:none;padding:0 14px 14px 44px;">
+          <ul style="font-size:12px;color:var(--muted);line-height:1.8;margin:0;padding-left:16px;">
+            <li>Ejercicio piloto de observación de incidentes realizado en 8B, agosto de 2026</li>
+            <li>Creación de ficha de observación aplicable a todos los cursos</li>
+            <li><a href="https://docs.google.com/spreadsheets/d/178XS6UiQiT7nLZ0rR6tLx4fl0bFluMCE/edit?usp=sharing&ouid=114805729515452608655&rtpof=true&sd=true" target="_blank" style="color:var(--blue);">Ver ficha de observación (Google Sheets)</a></li>
+            <li>Análisis de datos 8B</li>
+            <li>Taller con estudiantes, con acuerdos y estrategias de seguimiento</li>
+            <li>Taller con docentes sobre dinámicas en aulas</li>
+            <li>Socialización a familias en reuniones</li>
+            <li>Pendiente continuar el ejercicio con otros cursos y establecer la relación con desempeños</li>
+          </ul>
         </div>
       </div>
-      <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--surface);border-radius:6px;border:1px solid var(--line);">
-        <span style="color:var(--blue);font-size:18px;line-height:1;flex-shrink:0;">④</span>
-        <div>
-          <div style="font-size:13px;font-weight:700;margin-bottom:3px;">Apoyos externos de psicología</div>
-          <div style="font-size:12px;color:var(--muted);">Cruzar estudiantes en brecha con quienes tienen plan de apoyo activo en psicología para identificar brechas de atención.</div>
+
+      <!-- ④ -->
+      <div style="background:var(--surface);border-radius:6px;border:1px solid var(--line);overflow:hidden;">
+        <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;cursor:pointer;" onclick="toggleVar('v4')">
+          <span style="color:var(--blue);font-size:18px;line-height:1;flex-shrink:0;">④</span>
+          <div style="flex:1;">
+            <div style="font-size:13px;font-weight:700;margin-bottom:3px;">Apoyos externos de psicología</div>
+            <div style="font-size:12px;color:var(--muted);">Relacionar casos de estudiantes con seguimiento externo a través de la historia en el colegio, con sus desempeños académicos.</div>
+          </div>
+          <span id="arr-v4" style="color:var(--muted);font-size:10px;flex-shrink:0;margin-top:2px;">▼</span>
+        </div>
+        <div id="v4" style="display:none;padding:0 14px 14px 44px;">
+          <ul style="font-size:12px;color:var(--muted);line-height:1.8;margin:0;padding-left:16px;">
+            <li>A la fecha no se han podido establecer repositorios claros que permitan entender la historia de cada estudiante con apoyos en psicología (interna o externa)</li>
+          </ul>
         </div>
       </div>
-      <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--surface);border-radius:6px;border:1px solid var(--line);">
-        <span style="color:var(--blue);font-size:18px;line-height:1;flex-shrink:0;">⑤</span>
-        <div>
-          <div style="font-size:13px;font-weight:700;margin-bottom:3px;">Fortalecer las experiencias y prácticas de aprendizaje</div>
-          <div style="font-size:12px;color:var(--muted);">Acompañamiento docente, retroalimentación y calidad de las experiencias de aula como variable que complementa la calidad evaluativa ya trabajada en SIACO.</div>
+
+      <!-- ⑤ -->
+      <div style="background:var(--surface);border-radius:6px;border:1px solid var(--line);overflow:hidden;">
+        <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;cursor:pointer;" onclick="toggleVar('v5')">
+          <span style="color:var(--blue);font-size:18px;line-height:1;flex-shrink:0;">⑤</span>
+          <div style="flex:1;">
+            <div style="font-size:13px;font-weight:700;margin-bottom:3px;">Fortalecer las experiencias y prácticas de aprendizaje</div>
+            <div style="font-size:12px;color:var(--muted);">Acompañamiento docente, retroalimentación y calidad de las experiencias de aula como variable que complementa la calidad evaluativa.</div>
+          </div>
+          <span id="arr-v5" style="color:var(--muted);font-size:10px;flex-shrink:0;margin-top:2px;">▼</span>
+        </div>
+        <div id="v5" style="display:none;padding:0 14px 14px 44px;">
+          <ul style="font-size:12px;color:var(--muted);line-height:1.8;margin:0;padding-left:16px;">
+            <li>Se continúa trabajando sobre retroalimentaciones de planeaciones, clases y docentes</li>
+          </ul>
         </div>
       </div>
+
+      <!-- Conclusión -->
+      <div style="margin-top:8px;padding:14px 16px;background:var(--surface2);border-left:3px solid var(--blue);border-radius:0 6px 6px 0;font-size:13px;color:var(--text);line-height:1.7;">
+        Se requiere continuar con el trabajo de alineación de enfoques en conjunto con las tres secciones y el equipo académico en general.
+      </div>
+
     </div>
   </div>
 </div>
@@ -869,6 +939,14 @@ const HEATMAP_VALS = [
 // ── NAV SCROLL ─────────────────────────────────────────────────────────────
 function scrollToSection(id) {
   document.getElementById(id).scrollIntoView({behavior:'smooth'});
+}
+
+function toggleVar(id) {
+  const el = document.getElementById(id);
+  const arr = document.getElementById('arr-' + id);
+  const open = el.style.display === 'block';
+  el.style.display = open ? 'none' : 'block';
+  if (arr) arr.textContent = open ? '▼' : '▲';
 }
 
 function toggleInforme(id) {
