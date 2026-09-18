@@ -180,7 +180,7 @@ canvas { width: 100% !important; }
   font-size: 12px; padding: 6px 10px; border-radius: 4px;
   background: var(--surface2); border-left: 3px solid;
 }
-.tarea-done  { border-color: var(--green); color: var(--text); }
+.tarea-done  { border-color: var(--green); color: var(--text); background: var(--green-dim); }
 .tarea-pend  { border-color: var(--amber); color: var(--muted); }
 
 /* ── DESCRIPTORES ── */
@@ -329,6 +329,7 @@ canvas { width: 100% !important; }
     <button class="nav-link" onclick="scrollToSection('s6')">Descriptores</button>
     <button class="nav-link" onclick="scrollToSection('s7')">Casos críticos</button>
     <button class="nav-link" onclick="scrollToSection('s8')">T3</button>
+    <button class="nav-link" onclick="scrollToSection('s9')">Fuentes</button>
   </div>
   <button class="nav-print" onclick="window.print()" title="Se abrirá el diálogo de impresión — seleccione 'Guardar como PDF' como destino">⬇ Descargar PDF</button>
 </nav>
@@ -561,7 +562,7 @@ canvas { width: 100% !important; }
         <div class="siaco-tarea tarea-done">✓ Perfiles T1 — may 20</div>
         <div class="siaco-tarea tarea-done">✓ Perfiles corte 1 T2 — jun 9</div>
         <div class="siaco-tarea tarea-done">✓ Perfiles corte 2 T2 — jul 17</div>
-        <div class="siaco-tarea tarea-pend">◷ Perfiles corte 3 T2 — ago 19</div>
+        <div class="siaco-tarea tarea-done">✓ Perfiles corte 3 T2 — ago 19</div>
       </div>
     </div>
     <div class="siaco-arrow">→</div>
@@ -894,6 +895,37 @@ canvas { width: 100% !important; }
 </section>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<!-- FUENTES -->
+<section id="s9" style="min-height:auto;padding:48px 0 64px;">
+<div class="inner">
+  <div class="sec-label">Fuentes de datos</div>
+  <h2>Archivos fuente utilizados</h2>
+  <p class="sec-sub">Registros originales desde los que se extrajeron los datos de este informe.</p>
+  <div style="display:flex;flex-direction:column;gap:10px;max-width:700px;">
+    <a href="https://docs.google.com/spreadsheets/d/1oua8prFPTRHlVwZAZEEJKuyRVFo0-G2n/edit?usp=sharing&ouid=114805729515452608655&rtpof=true&sd=true" target="_blank" style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:6px;text-decoration:none;color:var(--text);transition:border-color .15s;" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='var(--line)'">
+      <span style="font-size:18px;">📊</span>
+      <div><div style="font-size:13px;font-weight:700;margin-bottom:2px;">Datos históricos y 2026 a T2</div><div style="font-size:11px;color:var(--muted);">Google Sheets — Base principal de indicadores por curso y área</div></div>
+    </a>
+    <a href="https://docs.google.com/spreadsheets/d/15QIhxFazS72EgfWkz9ti9xJmX6Mw5R5E/edit?usp=sharing&ouid=114805729515452608655&rtpof=true&sd=true" target="_blank" style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:6px;text-decoration:none;color:var(--text);transition:border-color .15s;" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='var(--line)'">
+      <span style="font-size:18px;">📊</span>
+      <div><div style="font-size:13px;font-weight:700;margin-bottom:2px;">Desempeños Bachillerato T2 2025</div><div style="font-size:11px;color:var(--muted);">Google Sheets — Desempeños por estudiante T2 2025</div></div>
+    </a>
+    <a href="https://docs.google.com/spreadsheets/d/1bBuGpouKpUPRVBcoW-lNh1xTzrx_rxJK/edit?usp=sharing&ouid=114805729515452608655&rtpof=true&sd=true" target="_blank" style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:6px;text-decoration:none;color:var(--text);transition:border-color .15s;" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='var(--line)'">
+      <span style="font-size:18px;">📊</span>
+      <div><div style="font-size:13px;font-weight:700;margin-bottom:2px;">Resumen global T2 2025</div><div style="font-size:11px;color:var(--muted);">Google Sheets — Resumen consolidado T2 2025</div></div>
+    </a>
+    <a href="https://docs.google.com/spreadsheets/d/1cFfWMxJMCoqLLGj5mXbNvIUfIlV5FZU3/edit?usp=sharing&ouid=114805729515452608655&rtpof=true&sd=true" target="_blank" style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:6px;text-decoration:none;color:var(--text);transition:border-color .15s;" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='var(--line)'">
+      <span style="font-size:18px;">📊</span>
+      <div><div style="font-size:13px;font-weight:700;margin-bottom:2px;">Desempeños Bachillerato T2 2026</div><div style="font-size:11px;color:var(--muted);">Google Sheets — Desempeños por estudiante T2 2026</div></div>
+    </a>
+    <a href="https://docs.google.com/spreadsheets/d/1lpGRfqUO6bbBHQ7AW0mE_-cKJIehJqTl/edit?usp=sharing&ouid=114805729515452608655&rtpof=true&sd=true" target="_blank" style="display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-radius:6px;text-decoration:none;color:var(--text);transition:border-color .15s;" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='var(--line)'">
+      <span style="font-size:18px;">📊</span>
+      <div><div style="font-size:13px;font-weight:700;margin-bottom:2px;">Resumen global T2 2026</div><div style="font-size:11px;color:var(--muted);">Google Sheets — Resumen consolidado T2 2026</div></div>
+    </a>
+  </div>
+</div>
+</section>
+
 <script>
 // ── DATOS ──────────────────────────────────────────────────────────────────
 const CURSOS_DATA = [
