@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestión Académica Bachillerato · T2 2026</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,500;0,9..40,700;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap');
+
+:root {
+  --bg: #0E1117;
+  --surface: #161B25;
+  --surface2: #1E2535;
+  --line: #2A3347;
+  --text: #E8EDF5;
+  --muted: #7B8BA8;
+  --green: #2DD4A0;
+  --green-dim: #1A3D30;
+  --amber: #F5C842;
+  --amber-dim: #3A3010;
+  --red: #F05252;
+  --red-dim: #3A1010;
+  --blue: #60A5FA;
+  --blue-dim: #1A2A3D;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(14,17,23,.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+  display: flex; align-items: center; gap: 0;
+  padding: 0 32px; height: 52px;
+}
+.nav-logo {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: 15px; color: var(--muted);
+  margin-right: 32px; white-space: nowrap;
+}
+.nav-logo span { color: var(--text); }
+.nav-links { display: flex; gap: 0; overflow-x: auto; }
+.nav-link {
+  font-size: 13px; font-weight: 500; color: var(--muted);
+  padding: 0 16px; height: 52px; display: flex; align-items: center;
+  border-bottom: 2px solid transparent; white-space: nowrap;
+  cursor: pointer; transition: color .15s, border-color .15s;
+  background: none; border-left: none; border-right: none; border-top: none;
+}
+.nav-link:hover { color: var(--text); }
+.nav-link.active { color: var(--text); border-bottom-color: var(--green); }
+
+/* ── SECTIONS ── */
+section {
+  min-height: 100vh; padding: 80px 0 64px;
+  border-bottom: 1px solid var(--line);
+}
+.inner { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+
+.sec-label {
+  font-size: 12px; font-weight: 700; letter-spacing: .1em;
+  color: var(--green); margin-bottom: 12px;
+  display: flex; align-items: center; gap: 8px;
+}
+.sec-label::after {
+  content: ''; flex: 1; height: 1px; background: var(--line);
+}
+h2 {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: clamp(28px,4vw,42px); font-weight: 400;
+  line-height: 1.15; margin-bottom: 8px;
+}
+.sec-sub { font-size: 16px; color: var(--muted); max-width: 60ch; margin-bottom: 40px; }
+
+/* ── STAT CARDS ── */
+.stat-row { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 40px; }
+.stat-card {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: 8px; padding: 24px;
+}
+.stat-card .label { font-size: 12px; color: var(--muted); margin-bottom: 8px; }
+.stat-card .value {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: 48px; line-height: 1; margin-bottom: 6px;
+}
+.stat-card .value.green { color: var(--green); }
+.stat-card .value.amber { color: var(--amber); }
+.stat-card .sub { font-size: 13px; color: var(--muted); }
+.stat-card .badge {
+  display: inline-block; font-size: 12px; font-weight: 700;
+  padding: 3px 10px; border-radius: 20px; margin-top: 8px;
+}
+.badge-green { background: var(--green-dim); color: var(--green); }
+.badge-amber { background: var(--amber-dim); color: var(--amber); }
+.badge-red   { background: var(--red-dim);   color: var(--red); }
+
+/* ── CHART ── */
+canvas { width: 100% !important; }
+
+/* ── CURSOS GRID ── */
+.cursos-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 12px; margin-bottom: 32px; }
+.curso-card {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: 8px; padding: 16px; position: relative; overflow: hidden;
+}
+.curso-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+}
+.curso-card.meta::before   { background: var(--green); }
+.curso-card.cercano::before{ background: var(--amber); }
+.curso-card.critico::before{ background: var(--red); }
+.curso-nombre { font-size: 13px; font-weight: 700; margin-bottom: 12px; }
+.curso-t2 {
+  font-family: 'DM Serif Display', Georgia, serif;
+  font-size: 36px; line-height: 1; margin-bottom: 4px;
+}
+.curso-card.meta    .curso-t2 { color: var(--green); }
+.curso-card.cercano .curso-t2 { color: var(--amber); }
+.curso-card.critico .curso-t2 { color: var(--red); }
+.curso-delta { font-size: 12px; color: var(--muted); }
+.curso-delta .pos { color: var(--green); font-weight: 700; }
+.curso-delta .neg { color: var(--red);   font-weight: 700; }
+.curso-delta .neu { color: var(--muted); font-weight: 700; }
+.curso-bar { height: 4px; background: var(--line); border-radius: 2px; margin-top: 10px; }
+.curso-bar-fill { height: 100%; border-radius: 2px; }
+.meta    .curso-bar-fill { background: var(--green); }
+.cercano .curso-bar-fill { background: var(--amber); }
+.critico .curso-bar-fill { background: var(--red); }
+
+/* ── HEATMAP ── */
+.heatmap-wrap { overflow-x: auto; }
+.heatmap-table { border-collapse: collapse; width: 100%; min-width: 700px; }
+.heatmap-table th {
+  font-size: 12px; font-weight: 600; color: var(--muted);
+  padding: 8px 6px; text-align: center;
+}
+.heatmap-table td {
+  width: 80px; height: 48px; text-align: center;
+  font-size: 12px; font-weight: 700; border: 1px solid var(--bg);
+  border-radius: 4px; transition: transform .1s;
+}
+.heatmap-table td:hover { transform: scale(1.08); z-index: 2; position: relative; }
+.heatmap-table .area-label {
+  text-align: right; font-size: 12px; color: var(--muted); font-weight: 400;
+  padding-right: 12px; white-space: nowrap; width: 140px;
+}
+.hm-empty { background: var(--surface); color: var(--line); }
+
+/* ── SIACO DIAGRAM ── */
+.siaco-flow {
+  display: flex; align-items: stretch; gap: 0;
+  margin: 32px 0; position: relative;
+}
+.siaco-step {
+  flex: 1; background: var(--surface); border: 1px solid var(--line);
+  border-radius: 8px; padding: 28px 24px;
+}
+.siaco-arrow {
+  display: flex; align-items: center; padding: 0 8px;
+  color: var(--muted); font-size: 24px; flex-shrink: 0;
+}
+.siaco-num {
+  font-family: 'DM Serif Display'; font-size: 48px;
+  color: var(--line); line-height: 1; margin-bottom: 12px;
+}
+.siaco-step-title { font-size: 16px; font-weight: 700; margin-bottom: 8px; color: var(--green); }
+.siaco-step p { font-size: 13px; color: var(--muted); line-height: 1.6; }
+.siaco-tareas { margin-top: 16px; display: flex; flex-direction: column; gap: 6px; }
+.siaco-tarea {
+  font-size: 12px; padding: 6px 10px; border-radius: 4px;
+  background: var(--surface2); border-left: 3px solid;
+}
+.tarea-done  { border-color: var(--green); color: var(--text); }
+.tarea-pend  { border-color: var(--amber); color: var(--muted); }
+
+/* ── DESCRIPTORES ── */
+.desc-intro {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 32px;
+}
+.desc-ciclo {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: 8px; padding: 20px;
+}
+.desc-ciclo-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+.desc-ciclo-grades { font-size: 12px; color: var(--muted); margin-bottom: 16px; }
+.desc-bar-row { margin-bottom: 10px; }
+.desc-bar-label { display: flex; justify-content: space-between; font-size: 12px; margin-bottom: 4px; }
+.desc-bar-label .period { color: var(--muted); }
+.desc-bar-label .pct { font-weight: 700; }
+.desc-bar-track { height: 6px; background: var(--line); border-radius: 3px; }
+.desc-bar-fill { height: 100%; border-radius: 3px; background: var(--blue); }
+.desc-bar-fill.t2 { background: var(--green); }
+.desc-delta {
+  margin-top: 12px; font-size: 13px; font-weight: 700;
+  color: var(--green); display: flex; align-items: center; gap: 6px;
+}
+
+.scatter-wrap {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: 8px; padding: 24px; margin-bottom: 32px;
+}
+.scatter-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+.scatter-sub { font-size: 12px; color: var(--muted); margin-bottom: 20px; }
+
+/* ── ANÁLISIS SEGUNDA CAPA ── */
+.segunda-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.segunda-card {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: 8px; padding: 28px;
+}
+.segunda-card h3 {
+  font-family: 'DM Serif Display'; font-size: 24px;
+  color: var(--red); margin-bottom: 4px;
+}
+.segunda-card .ind {
+  font-size: 13px; color: var(--muted); margin-bottom: 20px;
+}
+.segunda-hallazgo {
+  font-size: 13px; padding: 10px 12px; border-radius: 4px;
+  background: var(--surface2); margin-bottom: 8px;
+  border-left: 3px solid var(--red);
+}
+.segunda-hallazgo.ok { border-color: var(--green); }
+.segunda-hallazgo .h-label { font-weight: 700; font-size: 12px; color: var(--muted); margin-bottom: 3px; }
+.siguiente { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+.sig-card {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: 8px; padding: 20px;
+}
+.sig-num {
+  font-family: 'DM Serif Display'; font-size: 36px;
+  color: var(--green); line-height: 1; margin-bottom: 12px;
+}
+.sig-title { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+.sig-body { font-size: 13px; color: var(--muted); }
+
+@media (max-width: 768px) {
+  .cursos-grid { grid-template-columns: repeat(2,1fr); }
+  .stat-row, .desc-intro, .segunda-grid, .siguiente { grid-template-columns: 1fr; }
+  .siaco-flow { flex-direction: column; }
+  .siaco-arrow { transform: rotate(90deg); justify-content: center; padding: 4px; }
+}
+
+/* ── TEXTO INFORME COLAPSABLE ── */
+.informe-toggle {
+  display: flex; align-items: center; gap: 10px;
+  margin-top: 32px; padding: 12px 16px;
+  background: var(--surface2); border: 1px solid var(--line);
+  border-radius: 6px; cursor: pointer; font-size: 13px;
+  color: var(--muted); width: 100%; text-align: left;
+  transition: color .15s, border-color .15s;
+}
+.informe-toggle:hover { color: var(--text); border-color: var(--muted); }
+.informe-toggle .arrow { margin-left: auto; transition: transform .2s; font-size: 10px; }
+.informe-toggle.open { color: var(--text); border-color: var(--blue); }
+.informe-toggle.open .arrow { transform: rotate(180deg); }
+.informe-body {
+  display: none; margin-top: 8px;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: 6px; padding: 24px 28px;
+}
+.informe-body.open { display: block; }
+.informe-body p { font-size: 14px; line-height: 1.8; color: var(--text); margin-bottom: 12px; }
+.informe-body p:last-child { margin-bottom: 0; }
+.informe-body .bullet { padding-left: 20px; border-left: 2px solid var(--line); margin-bottom: 10px; }
+.informe-body strong { color: var(--green); }
+.informe-body .tabla-informe {
+  width: 100%; border-collapse: collapse; font-size: 13px; margin: 16px 0;
+}
+.informe-body .tabla-informe th {
+  background: var(--surface2); color: var(--muted); font-size: 11px;
+  font-weight: 600; padding: 8px 10px; text-align: left;
+  border-bottom: 1px solid var(--line);
+}
+.informe-body .tabla-informe td {
+  padding: 8px 10px; border-bottom: 1px solid var(--line);
+  font-size: 13px; vertical-align: top;
+}
+.informe-body .tabla-informe tr:last-child td { border-bottom: none; }
+.informe-body .tabla-informe tr:nth-child(even) td { background: var(--surface2); }
+
+/* ── BOTÓN IMPRIMIR EN NAV ── */
+.nav-print {
+  margin-left: auto;
+  font-size: 12px; font-weight: 500; color: var(--muted);
+  padding: 0 16px; height: 52px; display: flex; align-items: center;
+  gap: 6px; white-space: nowrap; cursor: pointer;
+  background: none; border: none;
+  transition: color .15s;
+}
+.nav-print:hover { color: var(--text); }
+
+/* ── ESTILOS DE IMPRESIÓN ── */
+@media print {
+  nav, .pdf-btn, .informe-toggle { display: none !important; }
+  .informe-body { display: block !important; border: none; background: #fff; color: #111; }
+  .informe-body p, .informe-body td, .informe-body th { color: #111 !important; }
+  section { min-height: auto !important; padding: 20px 0 !important; page-break-inside: avoid; }
+  body { background: #fff !important; color: #111 !important; font-size: 12px; }
+  h2 { color: #111 !important; font-size: 20px !important; }
+  .sec-label { color: #2f5233 !important; }
+  .stat-card, .curso-card, .siaco-step, .segunda-card, .scatter-wrap,
+  .desc-ciclo, .heatmap-wrap { background: #f9f9f9 !important; border-color: #ddd !important; }
+  canvas { max-height: 200px; }
+  .inner { padding: 0 !important; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Evergreen · <span>Bachillerato T2 2026</span></div>
+  <div class="nav-links">
+    <button class="nav-link active" onclick="scrollToSection('s1')">Resultado</button>
+    <button class="nav-link" onclick="scrollToSection('s2')">Tendencia</button>
+    <button class="nav-link" onclick="scrollToSection('s3')">Por curso</button>
+    <button class="nav-link" onclick="scrollToSection('s4')">Por área</button>
+    <button class="nav-link" onclick="scrollToSection('s5')">SIACO</button>
+    <button class="nav-link" onclick="scrollToSection('s6')">Descriptores</button>
+    <button class="nav-link" onclick="scrollToSection('s7')">Casos críticos</button>
+    <button class="nav-link" onclick="scrollToSection('s8')">T3</button>
+  </div>
+  <button class="nav-print" onclick="window.print()" title="Se abrirá el diálogo de impresión — seleccione 'Guardar como PDF' como destino">⬇ Descargar PDF</button>
+</nav>
+
+<!-- S1: RESULTADO -->
+<!-- BANNER DESCARGA -->
+<div id="downloadBanner" style="background:#1E2535;border-bottom:1px solid #2A3347;padding:10px 32px;display:flex;align-items:center;justify-content:space-between;gap:16px;font-size:13px;color:#7B8BA8;margin-top:52px;">
+  <span>📄 Para descargar el PDF completo: abra este enlace en una pestaña nueva → use <strong style="color:#E8EDF5;">Ctrl+P</strong> (Windows) o <strong style="color:#E8EDF5;">Cmd+P</strong> (Mac) → seleccione <strong style="color:#E8EDF5;">"Guardar como PDF"</strong></span>
+  <button onclick="document.getElementById('downloadBanner').style.display='none'" style="background:none;border:none;color:#7B8BA8;cursor:pointer;font-size:18px;flex-shrink:0;padding:0 4px;">×</button>
+</div>
+
+<section id="s1">
+<div class="inner">
+  <div class="sec-label">Indicador 1 — Desempeños académicos</div>
+  <h2>El mejor T2 desde que hay registro</h2>
+  <p class="sec-sub">Por primera vez en la serie histórica, el resultado del Trimestre 2 supera al Trimestre 1 del mismo año — y supera la meta derivada del trimestre.</p>
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="label">Resultado T2 2026</div>
+      <div class="value green">45,99%</div>
+      <div class="sub">86 de 187 estudiantes</div>
+      <span class="badge badge-green">Meta T2 superada</span>
+    </div>
+    <div class="stat-card">
+      <div class="label">vs. Trimestre 1 2026</div>
+      <div class="value green">+5,88 pp</div>
+      <div class="sub">T1 fue 40,11% · T2 es 45,99%</div>
+      <span class="badge badge-green">Único T2 &gt; T1 en la historia</span>
+    </div>
+    <div class="stat-card">
+      <div class="label">Brecha con la meta final</div>
+      <div class="value amber">4,01 pp</div>
+      <div class="sub">Meta T3: 50% · Acumulado T1+T2: 41,71%</div>
+      <span class="badge badge-amber">T3 es alcanzable</span>
+    </div>
+  </div>
+  <div style="background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:20px 24px;max-width:600px;">
+    <div style="font-size:12px;color:var(--muted);margin-bottom:8px;">¿Qué mide este indicador?</div>
+    <div style="font-size:14px;line-height:1.7;">
+      El porcentaje de estudiantes de bachillerato que obtienen valoración <strong>A (Superior) o B (Alto) en al menos el 90%</strong> de sus desempeños en el trimestre. La meta institucional es <strong>50% por trimestre.</strong>
+    </div>
+  </div>
+  <button class="informe-toggle" onclick="toggleInforme('i1')">
+    <span>📄 Ver análisis completo — Marco del indicador</span><span class="arrow">▼</span>
+  </button>
+  <div class="informe-body" id="i1">
+    <table class="tabla-informe">
+      <tr><th>Nombre</th><td>% de estudiantes con desempeño Superior o Alto en mínimo el 90% de sus desempeños trimestrales</td></tr>
+      <tr><th>Meta Bachillerato</th><td>50% por trimestre</td></tr>
+      <tr><th>Frecuencia</th><td>Trimestral</td></tr>
+      <tr><th>Fuente</th><td>VPS — Valoraciones finales por trimestre</td></tr>
+      <tr><th>Metas derivadas 2026</th><td>T1 ≥ 35,3% · T2 ≥ 40,2% · T3 ≥ 50%</td></tr>
+    </table>
+    <table class="tabla-informe">
+      <thead><tr><th>Resultado T1 2026</th><th>Resultado T2 2026</th><th>Meta T2</th><th>Brecha vs. meta</th></tr></thead>
+      <tr><td>40,11%</td><td><strong>45,99%</strong></td><td>40,20%</td><td>Meta superada +5,79 pp</td></tr>
+      <tr><td>75 de 187 est.</td><td><strong>86 de 187 est.</strong></td><td>—</td><td>Acumulado T1+T2: 41,71%</td></tr>
+    </table>
+    <p>T2 es el primer trimestre en que se supera la meta derivada (40,20%) desde que se estableció el enfoque SIACO. El resultado de 45,99% supera además el mejor T2 histórico de bachillerato, que era 31,06% (2024). El acumulado T1+T2 (41,71%) supera ya la meta del T1 (35,30%) y se acerca a la meta del T2 (40,20%), lo que refleja una tendencia positiva sostenida a lo largo del primer semestre de 2026.</p>
+  </div>
+</div>
+</section>
+<section id="s2">
+<div class="inner">
+  <div class="sec-label">Serie histórica 2023–2026</div>
+  <h2>La recuperación es real</h2>
+  <p class="sec-sub">Después de tres años de tendencia decreciente, 2026 muestra el único T2 que supera al T1 y el resultado trimestral más alto desde 2023.</p>
+  <div style="background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:24px;margin-bottom:24px;">
+    <canvas id="chartTendencia" height="280"></canvas>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;">
+    <div style="background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px;text-align:center;">
+      <div style="font-size:11px;color:var(--muted);margin-bottom:6px;">T1 2026</div>
+      <div style="font-family:'DM Serif Display';font-size:28px;color:var(--text);">40,11%</div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px;text-align:center;">
+      <div style="font-size:11px;color:var(--muted);margin-bottom:6px;">T2 2026</div>
+      <div style="font-family:'DM Serif Display';font-size:28px;color:var(--green);">45,99%</div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px;text-align:center;">
+      <div style="font-size:11px;color:var(--muted);margin-bottom:6px;">Mejor T2 anterior</div>
+      <div style="font-family:'DM Serif Display';font-size:28px;color:var(--text);">31,06%</div>
+      <div style="font-size:11px;color:var(--muted);">2024</div>
+    </div>
+    <div style="background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px;text-align:center;">
+      <div style="font-size:11px;color:var(--muted);margin-bottom:6px;">Meta T3</div>
+      <div style="font-family:'DM Serif Display';font-size:28px;color:var(--amber);">50%</div>
+    </div>
+  </div>
+  <button class="informe-toggle" onclick="toggleInforme('i2')">
+    <span>📄 Ver análisis completo — Tendencia histórica</span><span class="arrow">▼</span>
+  </button>
+  <div class="informe-body" id="i2">
+    <table class="tabla-informe">
+      <thead><tr><th>Año</th><th>T1</th><th>T2</th><th>T3</th></tr></thead>
+      <tr><td>2023</td><td>41,88%</td><td>30,77%</td><td>31,62%</td></tr>
+      <tr><td>2024</td><td>26,52%</td><td>31,06%</td><td>37,12%</td></tr>
+      <tr><td>2025</td><td>30,94%</td><td>26,62%</td><td>25,18%</td></tr>
+      <tr><td><strong>2026</strong></td><td><strong>40,11%</strong></td><td><strong>45,99%</strong></td><td>—</td></tr>
+    </table>
+    <p class="bullet">2026 es el único año en la serie histórica que muestra crecimiento entre T1 y T2 (de 40,11% a 45,99%, +5,88 pp). En 2023, 2024 y 2025 el T2 fue siempre inferior al T1.</p>
+    <p class="bullet">El resultado de T2 2026 (45,99%) es el más alto registrado en cualquier trimestre desde 2023, superando incluso los mejores T3 de años anteriores.</p>
+  </div>
+</div>
+</section>
+
+<!-- S3: POR CURSO -->
+<section id="s3">
+<div class="inner">
+  <div class="sec-label">Segmentación por curso</div>
+  <h2>4 cursos en meta · 3 en zona crítica</h2>
+  <p class="sec-sub">La mejora no es homogénea. Sexto B es el movimiento más notable (+33 pp). Noveno retrocedió a 0%.</p>
+  <div class="cursos-grid" id="cursosGrid"></div>
+  <div style="display:flex;gap:20px;flex-wrap:wrap;font-size:13px;">
+    <span style="display:flex;align-items:center;gap:8px;"><span style="width:12px;height:3px;background:var(--green);display:inline-block;border-radius:2px;"></span>Meta (≥ 50%)</span>
+    <span style="display:flex;align-items:center;gap:8px;"><span style="width:12px;height:3px;background:var(--amber);display:inline-block;border-radius:2px;"></span>Cercano (35–49%)</span>
+    <span style="display:flex;align-items:center;gap:8px;"><span style="width:12px;height:3px;background:var(--red);display:inline-block;border-radius:2px;"></span>Crítico (&lt; 35%)</span>
+  </div>
+  <button class="informe-toggle" onclick="toggleInforme('i3')">
+    <span>📄 Ver análisis completo — Segmentación por curso</span><span class="arrow">▼</span>
+  </button>
+  <div class="informe-body" id="i3">
+    <table class="tabla-informe">
+      <thead><tr><th>Curso</th><th>T1</th><th>T2</th><th>Alcanzan</th><th>Total</th><th>Dif. pp</th><th>Estado T2</th></tr></thead>
+      <tr><td>Sexto A</td><td>69,57%</td><td>73,91%</td><td>17</td><td>23</td><td>+4,34</td><td>Meta</td></tr>
+      <tr><td>Sexto B</td><td>27,78%</td><td>61,11%</td><td>11</td><td>18</td><td>+33,33</td><td>Meta</td></tr>
+      <tr><td>Sexto C</td><td>77,78%</td><td>77,78%</td><td>14</td><td>18</td><td>0,00</td><td>Meta</td></tr>
+      <tr><td>Séptimo A</td><td>46,67%</td><td>40,00%</td><td>6</td><td>15</td><td>−6,67</td><td>Cercano</td></tr>
+      <tr><td>Séptimo B</td><td>47,37%</td><td>73,68%</td><td>14</td><td>19</td><td>+26,31</td><td>Meta</td></tr>
+      <tr><td>Octavo A</td><td>41,18%</td><td>35,29%</td><td>6</td><td>17</td><td>−5,89</td><td>Cercano</td></tr>
+      <tr><td>Octavo B</td><td>15,79%</td><td>15,79%</td><td>3</td><td>19</td><td>0,00</td><td>Crítico</td></tr>
+      <tr><td>Noveno</td><td>21,43%</td><td>0,00%</td><td>0</td><td>14</td><td>−21,43</td><td>Crítico</td></tr>
+      <tr><td>Décimo</td><td>20,00%</td><td>25,00%</td><td>5</td><td>20</td><td>+5,00</td><td>Crítico</td></tr>
+      <tr><td>Once</td><td>29,17%</td><td>41,67%</td><td>10</td><td>24</td><td>+12,50</td><td>Cercano</td></tr>
+      <tr><td><strong>Bachillerato</strong></td><td><strong>40,11%</strong></td><td><strong>45,99%</strong></td><td><strong>86</strong></td><td><strong>187</strong></td><td><strong>+5,88 pp</strong></td><td><strong>Meta superada</strong></td></tr>
+    </table>
+    <p class="bullet"><strong>Cursos en meta (≥50%):</strong> Sexto A (73,91%), Sexto B (61,11%), Sexto C (77,78%) y Séptimo B (73,68%). El caso de Sexto B es el más destacado: sube 33,33 pp respecto a T1, pasando de ser uno de los cursos más críticos a superar la meta.</p>
+    <p class="bullet"><strong>Cursos cercanos a la meta (35–49%):</strong> Séptimo A (40,00%), Octavo A (35,29%) y Once (41,67%). Séptimo A y Octavo A retrocedieron respecto a T1; Once avanza +12,50 pp.</p>
+    <p class="bullet"><strong>Cursos en situación crítica (&lt;35%):</strong> Octavo B (15,79%), Noveno (0,00%) y Décimo (25,00%). Noveno es el caso más preocupante: ningún estudiante alcanzó el indicador en T2, frente al 21,43% del T1.</p>
+  </div>
+</div>
+</section>
+
+<!-- S4: POR ÁREA -->
+<section id="s4">
+<div class="inner">
+  <div class="sec-label">% desempeños C o D por área y curso</div>
+  <h2>Dónde se concentra la dificultad</h2>
+  <p class="sec-sub">Physics, Science y Química mejoraron. STEM, Sociales y Social Studies siguen siendo las áreas de mayor riesgo, concentradas en Octavo B y Noveno.</p>
+  <div class="heatmap-wrap">
+    <table class="heatmap-table" id="heatmapTable"></table>
+  </div>
+  <div style="margin-top:16px;display:flex;gap:8px;align-items:center;font-size:12px;color:var(--muted);">
+    <span>Menor riesgo</span>
+    <div style="display:flex;gap:2px;">
+      <span style="width:20px;height:12px;background:#1A3D30;border-radius:2px;display:inline-block;"></span>
+      <span style="width:20px;height:12px;background:#1F5C3A;border-radius:2px;display:inline-block;"></span>
+      <span style="width:20px;height:12px;background:#B45309;border-radius:2px;display:inline-block;"></span>
+      <span style="width:20px;height:12px;background:#991B1B;border-radius:2px;display:inline-block;"></span>
+    </div>
+    <span>Mayor riesgo</span>
+    <span style="margin-left:16px;color:var(--line);">— = área sin datos críticos en ese curso</span>
+  </div>
+  <button class="informe-toggle" onclick="toggleInforme('i4')">
+    <span>📄 Ver análisis completo — Áreas y desempeños C o D</span><span class="arrow">▼</span>
+  </button>
+  <div class="informe-body" id="i4">
+    <table class="tabla-informe">
+      <thead><tr><th>Área</th><th>% C/D T1</th><th>% C/D T2</th><th>Dif.</th><th>Cursos más críticos en T2</th></tr></thead>
+      <tr><td>STEM</td><td>27,7%</td><td>28,0%</td><td>+0,3</td><td>Once (58%), Octavo B (58%), Noveno (50%)</td></tr>
+      <tr><td>Sociales</td><td>23,7%</td><td>29,7%</td><td>+6,0</td><td>Octavo B (60%), Noveno (60%), Séptimo A (47%)</td></tr>
+      <tr><td>Social Studies</td><td>9,6%</td><td>21,4%</td><td>+11,8</td><td>Octavo B (50%), Séptimo B (32%)</td></tr>
+      <tr><td>Matemáticas</td><td>20,8%</td><td>21,3%</td><td>+0,5</td><td>Octavo B (51%)</td></tr>
+      <tr><td>Español</td><td>23,4%</td><td>20,2%</td><td>−3,2</td><td>Décimo (37%), Octavo A (36%), Octavo B (35%)</td></tr>
+      <tr><td>Inglés</td><td>22,2%</td><td>16,6%</td><td>−5,5</td><td>Noveno (45%), Octavo B (35%), Décimo (33%)</td></tr>
+      <tr><td><strong>Physics</strong></td><td>42,9%</td><td><strong>28,3%</strong></td><td><strong>−14,6</strong></td><td>Once (42%)</td></tr>
+      <tr><td><strong>Science</strong></td><td>28,1%</td><td><strong>9,7%</strong></td><td><strong>−18,4</strong></td><td>—</td></tr>
+      <tr><td><strong>Química</strong></td><td>27,1%</td><td><strong>10,4%</strong></td><td><strong>−16,7</strong></td><td>—</td></tr>
+      <tr><td>Philosophy</td><td>9,2%</td><td>2,5%</td><td>−6,7</td><td>—</td></tr>
+      <tr><td>Psicomotricidad</td><td>0,8%</td><td>3,8%</td><td>+3,0</td><td>Décimo (38%)</td></tr>
+    </table>
+    <p class="bullet">STEM y Sociales son las áreas con mayor concentración de C/D en T2, con presencia crítica transversal en Octavo B, Noveno y Once.</p>
+    <p class="bullet"><strong>Physics, Science y Química mejoraron significativamente</strong> (−14,6, −18,4 y −16,7 pp respectivamente), lo que puede estar relacionado con los ajustes de criterios evaluativos trabajados en las sesiones post-corte de T1.</p>
+    <p class="bullet">Social Studies muestra el mayor incremento (+11,8 pp), con Octavo B (50%) y Séptimo B (32%) como los focos de mayor preocupación en T2.</p>
+    <p class="bullet">Noveno presenta concentraciones altas en múltiples áreas: Sociales (60%), STEM (50%), Inglés (45%) y Español (32%). Este patrón multidisciplinar, junto con el 0% del indicador global, hace de Noveno el grupo de atención prioritaria para T3.</p>
+  </div>
+</div>
+</section>
+
+<!-- S5: SIACO -->
+<section id="s5">
+<div class="inner">
+  <div class="sec-label">Proyecto de gestión</div>
+  <h2>¿Qué es SIACO y por qué existe?</h2>
+  <p class="sec-sub">Al cierre de 2025 se identificó que parte de los desempeños C/D podían estar explicados por la forma en que los docentes evaluaban, no solo por la dificultad académica de los estudiantes. SIACO responde a esa hipótesis.</p>
+
+  <div class="siaco-flow">
+    <div class="siaco-step">
+      <div class="siaco-num">1</div>
+      <div class="siaco-step-title">Asegurar la calidad del dato</div>
+      <p>Sesiones individuales con docentes después de cada corte para revisar que las valoraciones sean válidas, coherentes y bien fundamentadas.</p>
+      <div class="siaco-tareas">
+        <div class="siaco-tarea tarea-done">✓ Post-corte 1 T1 — may 22</div>
+        <div class="siaco-tarea tarea-done">✓ Post-corte 1 T2 — jun 9</div>
+        <div class="siaco-tarea tarea-pend">◷ Post-corte 2 T2 — jul 17</div>
+        <div class="siaco-tarea tarea-pend">◷ Post-corte 3 T2 — ago 19</div>
+      </div>
+    </div>
+    <div class="siaco-arrow">→</div>
+    <div class="siaco-step">
+      <div class="siaco-num">2</div>
+      <div class="siaco-step-title">Identificar estudiantes en riesgo</div>
+      <p>Con el dato validado, construir perfiles de riesgo por corte para intervenir con evidencia real, no con suposiciones.</p>
+      <div class="siaco-tareas">
+        <div class="siaco-tarea tarea-done">✓ Perfiles T1 — may 20</div>
+        <div class="siaco-tarea tarea-done">✓ Perfiles corte 1 T2 — jun 9</div>
+        <div class="siaco-tarea tarea-done">✓ Perfiles corte 2 T2 — jul 17</div>
+        <div class="siaco-tarea tarea-pend">◷ Perfiles corte 3 T2 — ago 19</div>
+      </div>
+    </div>
+    <div class="siaco-arrow">→</div>
+    <div class="siaco-step">
+      <div class="siaco-num">3</div>
+      <div class="siaco-step-title">Medir el efecto</div>
+      <p>Validar si el indicador mejoró al cierre de cada trimestre y documentar qué funcionó y qué ajustar.</p>
+      <div class="siaco-tareas">
+        <div class="siaco-tarea tarea-done">✓ Validación T1: 40,11%</div>
+        <div class="siaco-tarea tarea-done">✓ Reporte T1 completado</div>
+        <div class="siaco-tarea tarea-pend">◷ Validación T2 — ago 28</div>
+        <div class="siaco-tarea tarea-pend">◷ Reporte T2 — sep 4</div>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:var(--surface2);border:1px solid var(--line);border-radius:8px;padding:20px 24px;">
+    <div style="font-size:12px;color:var(--muted);margin-bottom:6px;">Acciones de soporte ejecutadas en T2</div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:12px;">
+      <div style="font-size:13px;">
+        <div style="color:var(--green);font-weight:700;margin-bottom:4px;">Abril 2026</div>
+        VPS habilitó descarga de descriptores y actividades de apoyo por docente y curso — antes era imposible revisar sin entrar planilla por planilla.
+      </div>
+      <div style="font-size:13px;">
+        <div style="color:var(--green);font-weight:700;margin-bottom:4px;">Inicio T2</div>
+        Dos documentos de lineamientos para la construcción de descriptores y actividades de apoyo, distribuidos a todos los docentes.
+      </div>
+      <div style="font-size:13px;">
+        <div style="color:var(--green);font-weight:700;margin-bottom:4px;">27–28 mayo</div>
+        Capacitación docente (2 tardes, 3 horas) sobre evaluación formativa, operacionalizando los lineamientos antes del Corte 2.
+      </div>
+    </div>
+  </div>
+  <button class="informe-toggle" onclick="toggleInforme('i5')">
+    <span>📄 Ver análisis completo — SIACO: estado Asana y lógica REDER</span><span class="arrow">▼</span>
+  </button>
+  <div class="informe-body" id="i5">
+    <p style="font-size:13px;font-weight:700;margin-bottom:12px;">Estado de subtareas en Asana al cierre de T2</p>
+    <table class="tabla-informe">
+      <thead><tr><th>Referencia Asana</th><th>Descripción</th><th>Fecha</th><th>Estado</th></tr></thead>
+      <tr><td>Acción 1 · Subtarea 1.1</td><td>Sesiones individuales post-corte 1 — Trimestre 1</td><td>22 may 2026</td><td><strong style="color:var(--green);">Completado</strong></td></tr>
+      <tr><td>Acción 1 · Subtarea 1.2</td><td>Sesiones individuales post-corte 1 — Trimestre 2</td><td>9 jun 2026</td><td><strong style="color:var(--green);">Completado</strong></td></tr>
+      <tr><td>Acción 2 · Subtarea 2.1</td><td>Identificación de perfiles de riesgo — T1</td><td>20 may 2026</td><td><strong style="color:var(--green);">Completado</strong></td></tr>
+      <tr><td>Acción 2 · Subtarea 2.2</td><td>Identificación de perfiles de riesgo — corte 1, T2</td><td>9 jun 2026</td><td><strong style="color:var(--green);">Completado</strong></td></tr>
+      <tr><td>Acción 2 · Subtarea 2.3</td><td>Identificación de perfiles de riesgo — corte 2, T2</td><td>17 jul 2026</td><td><strong style="color:var(--green);">Completado</strong></td></tr>
+      <tr><td>Acción 3 · Subtarea 3.1</td><td>Validación Meta 50% Desempeños — Trimestre 1</td><td>20 may 2026</td><td><strong style="color:var(--green);">Completado</strong></td></tr>
+      <tr><td>Acción 3 · Subtarea 3.2</td><td>Reporte final con ajustes — Trimestre 1</td><td>5 jun 2026</td><td><strong style="color:var(--green);">Completado</strong></td></tr>
+      <tr><td>Acción 1 · Subtarea 1.3</td><td>Sesiones individuales post-corte 2 — Trimestre 2</td><td>17 jul 2026</td><td style="color:var(--amber);">Pendiente</td></tr>
+      <tr><td>Acción 1 · Subtarea 1.4</td><td>Sesiones individuales post-corte 3 — Trimestre 2</td><td>19 ago 2026</td><td style="color:var(--amber);">Pendiente</td></tr>
+      <tr><td>Acción 2 · Subtarea 2.4</td><td>Identificación de perfiles de riesgo — corte 3, T2</td><td>19 ago 2026</td><td style="color:var(--amber);">Pendiente</td></tr>
+      <tr><td>Acción 3 · Subtarea 3.3</td><td>Validación Meta 50% Desempeños — Trimestre 2</td><td>28 ago 2026</td><td style="color:var(--amber);">Pendiente</td></tr>
+      <tr><td>Acción 3 · Subtarea 3.4</td><td>Reporte final con ajustes — Trimestre 2</td><td>4 sept 2026</td><td style="color:var(--amber);">Pendiente</td></tr>
+    </table>
+    <p style="font-size:13px;font-weight:700;margin:20px 0 12px;">Lógica REDER</p>
+    <table class="tabla-informe">
+      <thead><tr><th>Elemento REDER</th><th>Componente SIACO</th><th>Descripción</th></tr></thead>
+      <tr><td>R — Resultado</td><td>Meta del indicador</td><td>50% de estudiantes con ≥90% de desempeños en A/B por trimestre. T2 2026: 45,99% — meta derivada T2 (40,20%) superada en +5,79 pp.</td></tr>
+      <tr><td>E — Enfoque</td><td>Lógica SIACO</td><td>Asegurar la validez evaluativa como condición previa a la intervención. Sin valoraciones confiables, las decisiones de mejora carecen de fundamento.</td></tr>
+      <tr><td>D — Despliegue</td><td>Acciones 1 y 2</td><td>Sesiones individuales post-corte con docentes (Acción 1) + identificación de perfiles de riesgo por corte (Acción 2). 5 de 7 subtareas completadas.</td></tr>
+      <tr><td>E — Evaluación</td><td>Acción 3 · Subtareas 3.1 y 3.2</td><td>Validación del indicador al cierre de T1 completada (40,11%). Validación T2 programada para 28 de agosto.</td></tr>
+      <tr><td>R — Refinamiento</td><td>Hallazgos de T1 aplicados en T2</td><td>Las sesiones post-corte de T1 evidenciaron el uso de descriptores genéricos. En T2 se distribuyeron lineamientos y se realizó capacitación docente (27-28 mayo) para corregir ese patrón antes del Corte 2.</td></tr>
+    </table>
+  </div>
+</div>
+</section>
+<section id="s6">
+<div class="inner">
+  <div class="sec-label">Variable de calidad evaluativa</div>
+  <h2>Los descriptores mejoraron en todos los ciclos</h2>
+  <p class="sec-sub">Un descriptor genérico ("Actividad en clase", "Taller") no permite identificar qué se evaluó ni dónde encontrar la evidencia. Medimos cuántos descriptores cumplían los criterios del Comunicado del Consejo Académico del 26 de mayo.</p>
+
+  <div class="desc-intro" id="descCiclos"></div>
+
+  <div class="scatter-wrap">
+    <div class="scatter-title">¿Mejorar descriptores mejoró el indicador?</div>
+    <div class="scatter-sub">Cada punto es un curso. Eje horizontal: reducción en descriptores genéricos (T1→T2). Eje vertical: resultado en el indicador T2.</div>
+    <canvas id="chartScatter" height="320"></canvas>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+    <div style="background:var(--green-dim);border:1px solid var(--green);border-radius:8px;padding:20px;">
+      <div style="font-size:13px;font-weight:700;color:var(--green);margin-bottom:8px;">Hipótesis confirmada</div>
+      <div style="font-size:13px;">Los cursos que mejoraron más en descriptores (−7 a −13 pp) alcanzaron la meta o se acercaron. La mejora evaluativa coincide con la mejora del indicador en 6A, 6B, 6C, 7B y Once.</div>
+    </div>
+    <div style="background:var(--amber-dim);border:1px solid var(--amber);border-radius:8px;padding:20px;">
+      <div style="font-size:13px;font-weight:700;color:var(--amber);margin-bottom:8px;">Caso mixto</div>
+      <div style="font-size:13px;">Décimo mejoró descriptores en Physics (−37 pp) y Chemistry (−27 pp) y el indicador subió levemente. La mejora evaluativa contribuyó, pero no fue suficiente sola.</div>
+    </div>
+    <div style="background:var(--red-dim);border:1px solid var(--red);border-radius:8px;padding:20px;">
+      <div style="font-size:13px;font-weight:700;color:var(--red);margin-bottom:8px;">Hipótesis insuficiente</div>
+      <div style="font-size:13px;">Octavo B y Noveno mejoraron descriptores pero el indicador no respondió. En estos cursos existen otras variables que explican el bajo desempeño — el análisis evaluativo no es suficiente.</div>
+    </div>
+  </div>
+  <button class="informe-toggle" onclick="toggleInforme('i6')">
+    <span>📄 Ver análisis completo — Calidad de descriptores T1 vs T2</span><span class="arrow">▼</span>
+  </button>
+  <div class="informe-body" id="i6">
+    <p style="font-size:13px;font-weight:700;margin-bottom:12px;">Criterio de clasificación: Comunicado del Consejo Académico, 26 de mayo de 2026. Un descriptor es genérico si no especifica qué evidencia fue valorada ni dónde puede encontrarse.</p>
+    <table class="tabla-informe">
+      <thead><tr><th>Ciclo</th><th>Grados</th><th>Desc. genéricos T1</th><th>Desc. genéricos T2</th><th>Mejora</th></tr></thead>
+      <tr><td>Ciclo III</td><td>6°–7°</td><td>22%</td><td>16%</td><td><strong style="color:var(--green);">−6 pp</strong></td></tr>
+      <tr><td>Ciclo IV</td><td>8°–9°</td><td>19%</td><td>11%</td><td><strong style="color:var(--green);">−8 pp</strong></td></tr>
+      <tr><td>Ciclo V</td><td>10°–11°</td><td>26%</td><td>13%</td><td><strong style="color:var(--green);">−13 pp</strong></td></tr>
+    </table>
+    <table class="tabla-informe" style="margin-top:16px;">
+      <thead><tr><th>Curso</th><th>Desc. genéricos T1</th><th>Desc. genéricos T2</th><th>Δ</th><th>Indicador T2</th></tr></thead>
+      <tr><td>Sexto A</td><td>24%</td><td>15%</td><td>−9 pp</td><td>73,91% ✓</td></tr>
+      <tr><td>Sexto B</td><td>21%</td><td>14%</td><td>−7 pp</td><td>61,11% ✓</td></tr>
+      <tr><td>Sexto C</td><td>23%</td><td>17%</td><td>−6 pp</td><td>77,78% ✓</td></tr>
+      <tr><td>Séptimo A</td><td>21%</td><td>21%</td><td>0 pp</td><td>40,00%</td></tr>
+      <tr><td>Séptimo B</td><td>19%</td><td>14%</td><td>−5 pp</td><td>73,68% ✓</td></tr>
+      <tr><td>Octavo A</td><td>14%</td><td>9%</td><td>−5 pp</td><td>35,29%</td></tr>
+      <tr><td>Octavo B</td><td>19%</td><td>12%</td><td>−7 pp</td><td>15,79%</td></tr>
+      <tr><td>Noveno</td><td>23%</td><td>12%</td><td>−11 pp</td><td>0,00%</td></tr>
+      <tr><td>Décimo</td><td>25%</td><td>13%</td><td>−12 pp</td><td>25,00%</td></tr>
+      <tr><td>Once</td><td>27%</td><td>14%</td><td>−13 pp</td><td>41,67%</td></tr>
+    </table>
+    <p class="bullet" style="margin-top:16px;">Los cursos que mejoraron más en descriptores (−7 a −13 pp) alcanzaron la meta o se acercaron significativamente. La mejora evaluativa coincide con la mejora del indicador en 6A, 6B, 6C, 7B y Once.</p>
+    <p class="bullet">Séptimo A es el único curso sin mejora en descriptores (21%→21%) y el único de los dos séptimos que no alcanzó la meta. Octavo B y Noveno mejoraron descriptores pero el indicador no respondió, lo que señala la presencia de otras variables explicativas.</p>
+    <p class="bullet"><strong>Décimo:</strong> Physics bajó de 66% a 29% (−37 pp) y Chemistry de 43% a 16% (−27 pp) — las áreas que más mejoraron en el indicador. <strong>Once:</strong> Chemistry bajó de 49% a 5% (−44 pp). Ambos casos confirman la hipótesis en las áreas específicas donde se trabajó.</p>
+  </div>
+</div>
+</section>
+<section id="s7">
+<div class="inner">
+  <div class="sec-label">Análisis de segunda capa</div>
+  <h2>Octavo B y Noveno requieren otro enfoque</h2>
+  <p class="sec-sub">La mejora en la calidad evaluativa no movió el indicador en estos dos cursos. Eso señala que la causa raíz está en otro lugar.</p>
+  <div class="segunda-grid">
+    <div class="segunda-card">
+      <h3>Octavo B</h3>
+      <div class="ind">Indicador T2: 15,79% — sin cambio vs. T1</div>
+      <div class="segunda-hallazgo ok">
+        <div class="h-label">Descriptores mejoraron</div>
+        Natural Sciences: 40%→13% (−27 pp) · Música: 52%→0% (−52 pp)
+      </div>
+      <div class="segunda-hallazgo">
+        <div class="h-label">Alerta: Society & Political</div>
+        Descriptores subieron 8%→25% (+17 pp) — único retroceso claro
+      </div>
+      <div class="segunda-hallazgo">
+        <div class="h-label">El indicador no se movió</div>
+        6 áreas simultáneamente críticas en T1 y T2. La dificultad es sistémica, no evaluativa.
+      </div>
+      <div style="margin-top:16px;font-size:13px;color:var(--muted);">
+        <strong style="color:var(--text);">Variables a explorar en T3:</strong> historial académico crónico por estudiante, reportes de convivencia, apoyos de psicología.
+      </div>
+    </div>
+    <div class="segunda-card">
+      <h3>Noveno</h3>
+      <div class="ind">Indicador T2: 0,00% — cayó desde 21,43% en T1</div>
+      <div class="segunda-hallazgo ok">
+        <div class="h-label">Descriptores mejoraron en la mayoría</div>
+        Natural Sciences: 45%→17% (−28 pp) · English: 24%→9% (−15 pp)
+      </div>
+      <div class="segunda-hallazgo">
+        <div class="h-label">Alerta: Ciencias Sociales</div>
+        Descriptores subieron 0%→15% (+15 pp) — único retroceso
+      </div>
+      <div class="segunda-hallazgo">
+        <div class="h-label">El indicador cayó a 0%</div>
+        Pese a la mejora evaluativa, ningún estudiante alcanzó el indicador en T2. Esto es la señal más clara de variables adicionales.
+      </div>
+      <div style="margin-top:16px;font-size:13px;color:var(--muted);">
+        <strong style="color:var(--text);">Variables a explorar en T3:</strong> ausentismo escolar, historial académico de 3 años, convivencia, apoyos externos.
+      </div>
+    </div>
+  </div>
+  <button class="informe-toggle" onclick="toggleInforme('i7')">
+    <span>📄 Ver análisis completo — Conclusiones</span><span class="arrow">▼</span>
+  </button>
+  <div class="informe-body" id="i7">
+    <p class="bullet">T2 2026 es el mejor resultado trimestral de bachillerato desde 2023 y el único T2 que supera al T1 en la serie histórica. La meta derivada del trimestre (40,20%) se superó por primera vez.</p>
+    <p class="bullet">La mejora no es homogénea: cuatro cursos ya alcanzan la meta (6A, 6B, 6C, 7B) mientras tres permanecen en zona crítica. Noveno es el caso más urgente: retrocedió de 21,43% a 0% y requiere intervención focalizada antes del cierre de T3.</p>
+    <p class="bullet">La mejora en áreas como Physics, Science y Química sugiere un efecto del trabajo de criterios evaluativos en las sesiones post-corte. El incremento en STEM, Sociales y Social Studies indica que ese trabajo aún no ha alcanzado a todos los docentes con la misma profundidad.</p>
+    <p style="margin-top:16px;font-size:13px;font-style:italic;color:var(--muted);border-left:3px solid var(--line);padding-left:14px;line-height:1.8;">
+      El detalle de desempeños con ≥40% de valoraciones C o D por curso y asignatura, con comparativo T2 2025 vs T2 2026, está disponible en:
+      <a href="https://sites.google.com/evergreenschool.edu.co/desempenos-comparativo-bto/inicio" style="color:var(--blue);" target="_blank">sites.google.com/evergreenschool.edu.co/desempenos-comparativo-bto/inicio</a><br>
+      El detalle de desempeños críticos recurrentes por curso y asignatura, con comparativo T1 y T2 de 2025 y 2026, está disponible en:
+      <a href="https://sites.google.com/evergreenschool.edu.co/desempenos-criticos-bto/inicio" style="color:var(--blue);" target="_blank">sites.google.com/evergreenschool.edu.co/desempenos-criticos-bto/inicio</a>
+    </p>
+  </div>
+</div>
+</section>
+<section id="s8">
+<div class="inner">
+  <div class="sec-label">Lectura de cierre y perspectiva T3</div>
+  <h2>La hipótesis inicial era correcta pero incompleta</h2>
+  <p class="sec-sub">Los resultados de Octavo B y Noveno — donde los descriptores mejoraron pero el indicador no respondió — muestran que la hipótesis que motivó a SIACO al cierre de 2025 explica una parte del problema, no todo.</p>
+
+  <div style="background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:28px;margin-bottom:28px;max-width:820px;">
+    <div style="font-size:15px;line-height:1.8;color:var(--text);">
+      La hipótesis de trabajo al cierre de 2025 fue que parte de los desempeños C/D provenían de una calidad evaluativa insuficiente. Esa hipótesis impulsó SIACO y <strong style="color:var(--green);">fue parcialmente confirmada</strong>: en los cursos donde los descriptores mejoraron más, el indicador respondió. Sin embargo, los resultados de Octavo B y Noveno demuestran que <strong style="color:var(--amber);">la hipótesis es incompleta</strong>. El proceso evaluativo es una variable necesaria pero no suficiente — coexiste con otras que también determinan el desempeño de los estudiantes.
+      <br><br>
+      Esto no significa detener el trabajo en calidad evaluativa. Significa que hay que <strong>aislar esa variable de las demás</strong> para entender qué parte del resultado le corresponde a cada una. En el Consejo de Coordinación hemos comenzado a trabajar en un enfoque unificado entre las tres secciones que incluya esas otras variables: el conocimiento y caracterización del estudiante desde múltiples dimensiones, el análisis periódico con causas que incluyan convivencia, el historial académico crónico, los apoyos externos de psicología, y el escalamiento oportuno a instancias de apoyo. La primera fase de ese trabajo — caracterizar al estudiante como base de todas las decisiones pedagógicas — quedó consolidada como una necesidad común de las tres secciones.
+    </div>
+  </div>
+
+  <div style="background:var(--surface2);border:1px solid var(--line);border-radius:8px;padding:24px 28px;">
+    <div style="font-size:12px;color:var(--muted);margin-bottom:20px;letter-spacing:.05em;">VARIABLES IDENTIFICADAS PARA INCORPORAR AL ANÁLISIS CAUSAL</div>
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
+      <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--surface);border-radius:6px;border:1px solid var(--line);">
+        <span style="color:var(--blue);font-size:18px;line-height:1;flex-shrink:0;">①</span>
+        <div>
+          <div style="font-size:13px;font-weight:700;margin-bottom:3px;">Caracterización del estudiante</div>
+          <div style="font-size:12px;color:var(--muted);">Dimensiones académicas, socioemocionales, familiares y de desarrollo como base de decisiones pedagógicas.</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--surface);border-radius:6px;border:1px solid var(--line);">
+        <span style="color:var(--blue);font-size:18px;line-height:1;flex-shrink:0;">②</span>
+        <div>
+          <div style="font-size:13px;font-weight:700;margin-bottom:3px;">Historial académico crónico</div>
+          <div style="font-size:12px;color:var(--muted);">Identificar cuántos cortes y años consecutivos lleva cada estudiante en riesgo para distinguir casos nuevos de crónicos.</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--surface);border-radius:6px;border:1px solid var(--line);">
+        <span style="color:var(--blue);font-size:18px;line-height:1;flex-shrink:0;">③</span>
+        <div>
+          <div style="font-size:13px;font-weight:700;margin-bottom:3px;">Disciplina y comportamiento por curso</div>
+          <div style="font-size:12px;color:var(--muted);">Cruzar incidentes de convivencia por curso con el indicador académico para identificar correlaciones visibles.</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--surface);border-radius:6px;border:1px solid var(--line);">
+        <span style="color:var(--blue);font-size:18px;line-height:1;flex-shrink:0;">④</span>
+        <div>
+          <div style="font-size:13px;font-weight:700;margin-bottom:3px;">Apoyos externos de psicología</div>
+          <div style="font-size:12px;color:var(--muted);">Cruzar estudiantes en brecha con quienes tienen plan de apoyo activo en psicología para identificar brechas de atención.</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:flex-start;gap:12px;padding:14px;background:var(--surface);border-radius:6px;border:1px solid var(--line);grid-column:1/-1;">
+        <span style="color:var(--blue);font-size:18px;line-height:1;flex-shrink:0;">⑤</span>
+        <div>
+          <div style="font-size:13px;font-weight:700;margin-bottom:3px;">Fortalecer las experiencias y prácticas de aprendizaje</div>
+          <div style="font-size:12px;color:var(--muted);">Acompañamiento docente, retroalimentación y calidad de las experiencias de aula como variable que complementa la calidad evaluativa ya trabajada en SIACO.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script>
+// ── DATOS ──────────────────────────────────────────────────────────────────
+const CURSOS_DATA = [
+  {curso:"Sexto A",  t1:69.57,t2:73.91,alc:17,tot:23,estado:"meta"},
+  {curso:"Sexto B",  t1:27.78,t2:61.11,alc:11,tot:18,estado:"meta"},
+  {curso:"Sexto C",  t1:77.78,t2:77.78,alc:14,tot:18,estado:"meta"},
+  {curso:"Séptimo A",t1:46.67,t2:40.00,alc:6, tot:15,estado:"cercano"},
+  {curso:"Séptimo B",t1:47.37,t2:73.68,alc:14,tot:19,estado:"meta"},
+  {curso:"Octavo A", t1:41.18,t2:35.29,alc:6, tot:17,estado:"cercano"},
+  {curso:"Octavo B", t1:15.79,t2:15.79,alc:3, tot:19,estado:"critico"},
+  {curso:"Noveno",   t1:21.43,t2:0.00, alc:0, tot:14,estado:"critico"},
+  {curso:"Décimo",   t1:20.00,t2:25.00,alc:5, tot:20,estado:"critico"},
+  {curso:"Once",     t1:29.17,t2:41.67,alc:10,tot:24,estado:"cercano"},
+];
+
+const DESC_DATA = [
+  {curso:"Sexto A",  t1:24,t2:15,delta:-9, ind_t1:69.57,ind:73.91},
+  {curso:"Sexto B",  t1:21,t2:14,delta:-7, ind_t1:27.78,ind:61.11},
+  {curso:"Sexto C",  t1:23,t2:17,delta:-6, ind_t1:77.78,ind:77.78},
+  {curso:"Séptimo A",t1:21,t2:21,delta:0,  ind_t1:46.67,ind:40.00},
+  {curso:"Séptimo B",t1:19,t2:14,delta:-5, ind_t1:47.37,ind:73.68},
+  {curso:"Octavo A", t1:14,t2:9, delta:-5, ind_t1:41.18,ind:35.29},
+  {curso:"Octavo B", t1:19,t2:12,delta:-7, ind_t1:15.79,ind:15.79},
+  {curso:"Noveno",   t1:23,t2:12,delta:-11,ind_t1:21.43,ind:0.00},
+  {curso:"Décimo",   t1:25,t2:13,delta:-12,ind_t1:20.00,ind:25.00},
+  {curso:"Once",     t1:27,t2:14,delta:-13,ind_t1:29.17,ind:41.67},
+];
+
+const HEATMAP_AREAS = ["STEM","Sociales","Social Studies","Matemáticas","Español","Inglés","Physics","Science","Química"];
+const HEATMAP_CURSOS = ["6A","6B","6C","7A","7B","8A","8B","9","10","11"];
+const HEATMAP_VALS = [
+  [null,null,null,null,null,null,58,50,null,58],
+  [null,null,null,47,null,33,60,60,null,null],
+  [null,null,null,null,null,null,50,null,null,null],
+  [null,null,null,null,null,null,51,null,null,33],
+  [null,null,null,null,null,36,35,32,37,null],
+  [null,null,null,35,null,null,35,45,33,null],
+  [null,null,null,null,null,null,null,null,null,42],
+  [null,null,null,null,null,null,null,null,null,null],
+  [null,null,null,null,null,null,null,null,40,null],
+];
+
+// ── NAV SCROLL ─────────────────────────────────────────────────────────────
+function scrollToSection(id) {
+  document.getElementById(id).scrollIntoView({behavior:'smooth'});
+}
+
+function toggleInforme(id) {
+  const body = document.getElementById(id);
+  const btn = body.previousElementSibling;
+  body.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+
+// Highlight active nav on scroll
+const sections = document.querySelectorAll('section');
+const navLinks = document.querySelectorAll('.nav-link');
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 100) current = s.id;
+  });
+  navLinks.forEach((l,i) => {
+    const ids = ['s1','s2','s3','s4','s5','s6','s7','s8'];
+    l.classList.toggle('active', ids[i] === current);
+  });
+});
+
+// ── CURSOS GRID ────────────────────────────────────────────────────────────
+const grid = document.getElementById('cursosGrid');
+CURSOS_DATA.forEach(d => {
+  const delta = d.t2 - d.t1;
+  const sign = delta > 0 ? '+' : '';
+  const cls = delta > 0 ? 'pos' : delta < 0 ? 'neg' : 'neu';
+  const pct = Math.min(d.t2, 100);
+  grid.innerHTML += `
+  <div class="curso-card ${d.estado}">
+    <div class="curso-nombre">${d.curso}</div>
+    <div class="curso-t2">${d.t2.toFixed(1)}%</div>
+    <div class="curso-delta">
+      T1: ${d.t1.toFixed(1)}% · <span class="${cls}">${sign}${delta.toFixed(1)} pp</span>
+    </div>
+    <div style="font-size:11px;color:var(--muted);margin-top:4px;">${d.alc} de ${d.tot} estudiantes</div>
+    <div class="curso-bar"><div class="curso-bar-fill" style="width:${pct}%"></div></div>
+  </div>`;
+});
+
+// ── HEATMAP ─────────────────────────────────────────────────────────────────
+function heatColor(v) {
+  if (v === null) return 'var(--surface)';
+  if (v < 35) return '#1A3D30';
+  if (v < 45) return '#1F5C3A';
+  if (v < 55) return '#B45309';
+  return '#991B1B';
+}
+function heatText(v) {
+  if (v === null) return '—';
+  return v + '%';
+}
+const tbl = document.getElementById('heatmapTable');
+let html = '<thead><tr><th style="text-align:right;padding-right:12px;color:var(--muted);font-size:11px;">Área / Curso</th>';
+HEATMAP_CURSOS.forEach(c => html += `<th>${c}</th>`);
+html += '</tr></thead><tbody>';
+HEATMAP_AREAS.forEach((area, ai) => {
+  html += `<tr><td class="area-label">${area}</td>`;
+  HEATMAP_VALS[ai].forEach(v => {
+    const color = heatColor(v);
+    const textColor = v !== null && v > 35 ? '#fff' : 'var(--muted)';
+    html += `<td style="background:${color};color:${textColor};">${heatText(v)}</td>`;
+  });
+  html += '</tr>';
+});
+html += '</tbody>';
+tbl.innerHTML = html;
+
+// ── CHART TENDENCIA ─────────────────────────────────────────────────────────
+const ctxT = document.getElementById('chartTendencia').getContext('2d');
+const labels = ['T1 2023','T2 2023','T3 2023','T1 2024','T2 2024','T3 2024','T1 2025','T2 2025','T3 2025','T1 2026','T2 2026'];
+const vals   = [41.88,30.77,31.62,26.52,31.06,37.12,30.94,26.62,25.18,40.11,45.99];
+const colors = vals.map((v,i) => i===10 ? '#2DD4A0' : 'rgba(96,165,250,0.8)');
+
+new Chart(ctxT, {
+  type: 'line',
+  data: {
+    labels,
+    datasets: [
+      {
+        label: 'Resultado trimestral',
+        data: vals,
+        borderColor: '#60A5FA',
+        backgroundColor: colors,
+        pointBackgroundColor: colors,
+        pointRadius: vals.map((_,i) => i===10 ? 10 : 6),
+        pointHoverRadius: 8,
+        borderWidth: 2, tension: 0.3, fill: false,
+      },
+      {
+        label: 'Meta 50%',
+        data: Array(11).fill(50),
+        borderColor: 'rgba(245,200,66,.5)',
+        borderDash: [6,4], borderWidth: 1.5,
+        pointRadius: 0, fill: false,
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { labels: { color: '#7B8BA8', font: { size: 12 } } },
+      tooltip: { callbacks: { label: ctx => ctx.dataset.label + ': ' + ctx.raw.toFixed(2) + '%' } }
+    },
+    scales: {
+      x: { ticks: { color: '#7B8BA8', font: { size: 11 } }, grid: { color: '#2A3347' } },
+      y: {
+        min: 15, max: 60,
+        ticks: { color: '#7B8BA8', callback: v => v + '%', font: { size: 11 } },
+        grid: { color: '#2A3347' }
+      }
+    }
+  }
+});
+
+// ── DESC CICLOS ─────────────────────────────────────────────────────────────
+const ciclos = [
+  {titulo:'Ciclo III', grades:'6° – 7°', t1:22, t2:16, delta:-6},
+  {titulo:'Ciclo IV',  grades:'8° – 9°', t1:19, t2:11, delta:-8},
+  {titulo:'Ciclo V',   grades:'10° – 11°',t1:26, t2:13, delta:-13},
+];
+const descDiv = document.getElementById('descCiclos');
+ciclos.forEach(c => {
+  descDiv.innerHTML += `
+  <div class="desc-ciclo">
+    <div class="desc-ciclo-title">${c.titulo}</div>
+    <div class="desc-ciclo-grades">${c.grades}</div>
+    <div class="desc-bar-row">
+      <div class="desc-bar-label"><span class="period">T1 2026</span><span class="pct">${c.t1}%</span></div>
+      <div class="desc-bar-track"><div class="desc-bar-fill" style="width:${c.t1*2}%"></div></div>
+    </div>
+    <div class="desc-bar-row">
+      <div class="desc-bar-label"><span class="period">T2 2026</span><span class="pct">${c.t2}%</span></div>
+      <div class="desc-bar-track"><div class="desc-bar-fill t2" style="width:${c.t2*2}%"></div></div>
+    </div>
+    <div class="desc-delta">↓ ${Math.abs(c.delta)} pp menos descriptores genéricos</div>
+  </div>`;
+});
+
+// ── SCATTER DESCRIPTORES vs INDICADOR ──────────────────────────────────────
+const ctxS = document.getElementById('chartScatter').getContext('2d');
+const estadoColors = { meta:'#2DD4A0', cercano:'#F5C842', critico:'#F05252' };
+new Chart(ctxS, {
+  type: 'scatter',
+  data: {
+    datasets: [{
+      label: 'Cursos',
+      data: DESC_DATA.map(d => ({ x: d.delta, y: d.ind, label: d.curso, estado: d.estado, ind_t1: d.ind_t1, ind_t2: d.ind, delta_ind: d.ind - d.ind_t1 })),
+      backgroundColor: DESC_DATA.map(d => estadoColors[d.estado] + 'CC'),
+      borderColor: DESC_DATA.map(d => estadoColors[d.estado]),
+      borderWidth: 2,
+      pointRadius: 14, pointHoverRadius: 16,
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: ctx => {
+            const d = ctx.raw;
+            const sign = d.delta_ind >= 0 ? '+' : '';
+            return [
+              `${d.label}`,
+              `Descriptores genéricos: ${d.x} pp`,
+              `Indicador T1: ${d.ind_t1.toFixed(2)}%`,
+              `Indicador T2: ${d.ind_t2.toFixed(2)}%`,
+              `Δ indicador: ${sign}${d.delta_ind.toFixed(2)} pp`,
+            ];
+          }
+        },
+        backgroundColor: 'rgba(22,27,37,0.97)',
+        borderColor: '#2A3347',
+        borderWidth: 1,
+        titleColor: '#E8EDF5',
+        bodyColor: '#7B8BA8',
+        padding: 12,
+        callbacks: {
+          title: ctx => ctx[0].raw.label,
+          label: ctx => {
+            const d = ctx.raw;
+            const sign = d.delta_ind >= 0 ? '+' : '';
+            return [
+              `Δ descriptores genéricos: ${d.x} pp`,
+              `Indicador T1 → T2: ${d.ind_t1.toFixed(2)}% → ${d.ind_t2.toFixed(2)}%`,
+              `Δ indicador: ${sign}${d.delta_ind.toFixed(2)} pp`,
+            ];
+          }
+        }
+      }
+    },
+    scales: {
+      x: {
+        title: { display: true, text: 'Δ descriptores genéricos (T1→T2, pp)', color: '#7B8BA8', font:{size:12} },
+        ticks: { color: '#7B8BA8', callback: v => v + ' pp' },
+        grid: { color: '#2A3347' },
+        min: -15, max: 2,
+      },
+      y: {
+        title: { display: true, text: 'Indicador T2 (%)', color: '#7B8BA8', font:{size:12} },
+        ticks: { color: '#7B8BA8', callback: v => v + '%' },
+        grid: { color: '#2A3347' },
+        min: -5, max: 85,
+      }
+    }
+  },
+  plugins: [{
+    afterDatasetsDraw(chart) {
+      const ctx2 = chart.ctx;
+      chart.data.datasets[0].data.forEach((d, i) => {
+        const meta = chart.getDatasetMeta(0).data[i];
+        ctx2.fillStyle = '#E8EDF5';
+        ctx2.font = '700 11px DM Sans, sans-serif';
+        ctx2.textAlign = 'center';
+        ctx2.fillText(d.label.split(' ')[0], meta.x, meta.y - 18);
+      });
+    }
+  }]
+});
+</script>
+</body>
+</html>
